@@ -1,8 +1,11 @@
-import {IsNotEmpty} from "class-validator";
+import { IsNotEmpty, IsString } from 'class-validator';
 
-export class CreatePostDto{
+export class CreatePostDto {
     @IsNotEmpty()
-    readonly title : string
+    @IsString()
+    readonly title: string;
+
     @IsNotEmpty()
-    readonly body : string
+    @IsString()
+    readonly body: string;
 }
