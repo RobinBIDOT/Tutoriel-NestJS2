@@ -1,10 +1,13 @@
 import {Controller, Post, Put, Delete, Body, Param, Req, UseGuards, ParseIntPipe} from '@nestjs/common';
 import { Request } from "express"
 import {CommentService} from "./comment.service";
-import {CreateCommentDto} from "./dto/createCommentDto";
+import {CreateCommentDto} from "./dto/createComment.dto";
 import {AuthGuard} from "@nestjs/passport";
-import {UpdateCommentDto} from "./dto/updateCommentDto";
+import {UpdateCommentDto} from "./dto/updateComment.dto";
+import {ApiBearerAuth, ApiTags} from "@nestjs/swagger";
 
+@ApiBearerAuth()
+@ApiTags("Comments")
 @Controller('comments')
 export class CommentController {
     constructor(private readonly commentService : CommentService ) {}

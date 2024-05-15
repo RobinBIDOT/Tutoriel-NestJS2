@@ -1,0 +1,6 @@
+<div class="list-group">
+  <a *ngFor="let post of posts" [routerLink]="['/post', post.id]" class="list-group-item list-group-item-action">
+    <h5 class="mb-1">{{ post.title }}</h5>
+    <p class="mb-1">{{ post.body }}</p>
+  </a>
+</div>

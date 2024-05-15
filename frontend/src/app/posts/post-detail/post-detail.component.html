@@ -1,0 +1,12 @@
+<div class="container">
+  <h2>{{ post.title }}</h2>
+  <p>{{ post.body }}</p>
+  <hr>
+  <h4>Comments</h4>
+  <div *ngFor="let comment of comments" class="card mb-2">
+    <div class="card-body">
+      <p>{{ comment.content }}</p>
+    </div>
+  </div>
+  <app-comment-form [postId]="post.id"></app-comment-form>
+</div>

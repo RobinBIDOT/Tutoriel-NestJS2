@@ -1,15 +1,15 @@
 import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { SignupDto } from './Dto/signupDto';
+import { SignupDto } from './Dto/signup.dto';
 import * as bcrypt from 'bcrypt';
 import * as speakeasy from 'speakeasy';
 import { MailerService } from '../mailer/mailer.service';
-import { SigninDto } from './Dto/signinDto';
+import { SigninDto } from './Dto/signin.dto';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import { ResetPasswordDemandDto } from './Dto/resetPasswordDemandDto';
-import { ResetPasswordConfirmationDto } from './Dto/resetPasswordConfirmationDto';
-import { DeleteAccountDto } from './Dto/deleteAccountDto';
+import { ResetPasswordDemandDto } from './Dto/resetPasswordDemand.dto';
+import { ResetPasswordConfirmationDto } from './Dto/resetPasswordConfirmation.dto';
+import { DeleteAccountDto } from './Dto/deleteAccount.dto';
 
 @Injectable()
 export class AuthService {
