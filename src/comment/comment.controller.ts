@@ -3,6 +3,7 @@ import { Request } from "express"
 import {CommentService} from "./comment.service";
 import {CreateCommentDto} from "./dto/createCommentDto";
 import {AuthGuard} from "@nestjs/passport";
+import {UpdateCommentDto} from "./dto/updateCommentDto";
 
 @Controller('comments')
 export class CommentController {
@@ -20,5 +21,12 @@ export class CommentController {
     delete(@Req() request : Request, @Param("id", ParseIntPipe) commentId : number, @Body("postId") postId : number ) {
         const userId = request.user["userId"]
         return this.commentService.delete(commentId, userId, postId)
+    }
+
+    @UseGuards(AuthGuard("jwt"))
+    @Put("update/:id")
+    update(@Param("id", ParseIntPipe) commentId : number, @Req() request : Request, @Body() updateCommentDto : UpdateCommentDto  ) {
+        const userId = request.user["userId"]
+        return this.commentService.update(commentId, userId, updateCommentDto)
     }
 }

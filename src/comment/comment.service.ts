@@ -1,6 +1,7 @@
 import {ForbiddenException, Injectable, NotFoundException, UnauthorizedException} from '@nestjs/common';
 import {CreateCommentDto} from "./dto/createCommentDto";
 import {PrismaService} from "../prisma/prisma.service";
+import {UpdateCommentDto} from "./dto/updateCommentDto";
 
 @Injectable()
 export class CommentService {
@@ -26,5 +27,15 @@ export class CommentService {
         if (comment.userId !== userId) throw new ForbiddenException("Forbidden action")
         await this.prismaService.comment.delete({where : {commentId}})
         return {data : "Comment deleted"}
+    }
+
+    async update(commentId: number, userId: number, updateCommentDto: UpdateCommentDto) {
+        const {content, postId} = updateCommentDto
+        const comment = await this.prismaService.comment.findUnique({where : {commentId}})
+        if (!comment) throw new NotFoundException('Comment not found')
+        if (comment.postId !== postId) throw new UnauthorizedException("Post id does not match")
+        if (comment.userId !== userId) throw new ForbiddenException("Forbidden action")
+        await this.prismaService.comment.update({where : {commentId}, data : { content }})
+        return {data : "Comment updated"}
     }
 }
