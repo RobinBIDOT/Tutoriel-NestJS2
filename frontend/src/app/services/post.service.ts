@@ -18,7 +18,15 @@ export class PostService {
     return this.http.get<any>(`${this.baseUrl}/${postId}`);
   }
 
-  getComments(postId: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/${postId}/comments`);
+  createPost(post: any): Observable<any> {
+    return this.http.post(this.baseUrl, post);
+  }
+
+  updatePost(postId: string, post: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/${postId}`, post);
+  }
+
+  deletePost(postId: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${postId}`);
   }
 }

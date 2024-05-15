@@ -10,9 +10,19 @@ export class CommentService {
 
   constructor(private http: HttpClient) {}
 
-  createComment(postId: number, content: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/create`, { postId, ...content });
+  getComments(postId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/post/${postId}`);
   }
 
-  // Add methods for update, delete
+  createComment(postId: number, comment: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/create`, { ...comment, postId });
+  }
+
+  updateComment(commentId: number, comment: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/update/${commentId}`, comment);
+  }
+
+  deleteComment(commentId: number, postId: number): Observable<any> {
+    return this.http.request('delete', `${this.baseUrl}/delete/${commentId}`, { body: { postId } });
+  }
 }

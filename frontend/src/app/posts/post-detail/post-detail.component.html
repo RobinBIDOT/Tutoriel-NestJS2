@@ -1,12 +1,31 @@
 <div class="container">
   <h2>{{ post.title }}</h2>
+  <p>Author: {{ post.user.username }}</p>
   <p>{{ post.body }}</p>
   <hr>
   <h4>Comments</h4>
   <div *ngFor="let comment of comments" class="card mb-2">
     <div class="card-body">
       <p>{{ comment.content }}</p>
+      <p>Commented by: {{ comment.user.username }}</p>
+      <button *ngIf="isAuthor(comment)" class="btn btn-sm btn-warning" (click)="editComment(comment)">Edit</button>
+      <button *ngIf="isAuthor(comment)" class="btn btn-sm btn-danger" (click)="deleteComment(comment.commentId)">Delete</button>
     </div>
   </div>
-  <app-comment-form [postId]="post.id"></app-comment-form>
+  <form [formGroup]="commentForm" (ngSubmit)="submitComment()">
+    <div class="form-group">
+      <textarea formControlName="content" class="form-control" placeholder="Add a comment"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+
+  <div *ngIf="editCommentId !== null" class="mt-4">
+    <form [formGroup]="updateForm" (ngSubmit)="updateComment()">
+      <div class="form-group">
+        <textarea formControlName="content" class="form-control" placeholder="Edit your comment"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Update</button>
+      <button type="button" class="btn btn-secondary" (click)="editCommentId = null">Cancel</button>
+    </form>
+  </div>
 </div>

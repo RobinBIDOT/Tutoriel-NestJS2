@@ -17,6 +17,11 @@ export class PostController {
         return this.postService.getAll()
     }
 
+    @Get(':id')
+    async findOne(@Param('id') id: string) {
+        return this.postService.getPostById(+id);
+    }
+
     @ApiBearerAuth()
     @UseGuards(AuthGuard("jwt"))
     @Post("create")

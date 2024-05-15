@@ -14,7 +14,6 @@ export class PostService {
                     select: {
                         username: true,
                         email: true,
-                        // Exclude password
                     }
                 },
                 comments: {
@@ -23,7 +22,6 @@ export class PostService {
                             select: {
                                 username: true,
                                 email: true,
-                                // Exclude password
                             }
                         }
                     }
@@ -52,5 +50,27 @@ export class PostService {
         if (post.userId !== userId) throw new ForbiddenException('Forbidden action');
         await this.prismaService.post.update({ where: { postId }, data: updatePostDto });
         return { data: 'Post updated' };
+    }
+
+    async getPostById(postId: number) {
+        return this.prismaService.post.findUnique({
+            where: { postId },
+            include: {
+                user: {
+                    select: {
+                        username: true,
+                    }
+                },
+                comments: {
+                    include: {
+                        user: {
+                            select: {
+                                username: true,
+                            }
+                        },
+                    },
+                },
+            },
+        });
     }
 }
