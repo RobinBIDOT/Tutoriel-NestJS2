@@ -1,0 +1,39 @@
+<div class="container">
+  <h2>{{ user.username }}'s Profile</h2>
+  <h4>My Posts</h4>
+  <div *ngFor="let post of posts" class="card mb-2">
+    <div class="card-body">
+      <h5>{{ post.title }}</h5>
+      <p>{{ post.body }}</p>
+      <button class="btn btn-sm btn-warning" (click)="editPost(post)">Edit</button>
+      <button class="btn btn-sm btn-danger" (click)="deletePost(post.postId)">Delete</button>
+    </div>
+  </div>
+  <form [formGroup]="postForm" (ngSubmit)="submitPost()">
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input id="title" formControlName="title" type="text" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="body">Body</label>
+      <textarea id="body" formControlName="body" class="form-control"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+
+  <h4>My Comments</h4>
+  <div *ngFor="let comment of comments" class="card mb-2">
+    <div class="card-body">
+      <p>{{ comment.content }}</p>
+      <button class="btn btn-sm btn-warning" (click)="editComment(comment)">Edit</button>
+      <button class="btn btn-sm btn-danger" (click)="deleteComment(comment.commentId)">Delete</button>
+    </div>
+  </div>
+  <form [formGroup]="commentForm" (ngSubmit)="submitComment()">
+    <div class="form-group">
+      <label for="content">Comment</label>
+      <textarea id="content" formControlName="content" class="form-control"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>

@@ -56,20 +56,21 @@ export class PostService {
         return this.prismaService.post.findUnique({
             where: { postId },
             include: {
-                user: {
-                    select: {
-                        username: true,
-                    }
-                },
+                user: true,
                 comments: {
                     include: {
-                        user: {
-                            select: {
-                                username: true,
-                            }
-                        },
+                        user: true,
                     },
                 },
+            },
+        });
+    }
+
+    async getUserPosts(userId: number) {
+        return this.prismaService.post.findMany({
+            where: { userId },
+            include: {
+                comments: true,
             },
         });
     }

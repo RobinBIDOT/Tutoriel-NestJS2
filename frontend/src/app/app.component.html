@@ -17,6 +17,9 @@
       <li *ngIf="authService.isLoggedIn()" class="nav-item">
         <a class="nav-link" routerLink="/reset-password">Reset Password</a>
       </li>
+      <li *ngIf="authService.isLoggedIn()" class="nav-item">
+        <a class="nav-link" routerLink="/profile">Profile</a>
+      </li>
     </ul>
   </div>
 </nav>

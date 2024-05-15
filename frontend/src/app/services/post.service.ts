@@ -11,22 +11,26 @@ export class PostService {
   constructor(private http: HttpClient) {}
 
   getPosts(): Observable<any[]> {
-    return this.http.get<any[]>(this.baseUrl);
+    return this.http.get<any[]>(`${this.baseUrl}`);
   }
 
   getPost(postId: string): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/${postId}`);
   }
 
-  createPost(post: any): Observable<any> {
-    return this.http.post(this.baseUrl, post);
+  createPost(userId: number, post: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}`, { ...post, userId });
   }
 
-  updatePost(postId: string, post: any): Observable<any> {
+  updatePost(postId: number, post: any): Observable<any> {
     return this.http.put(`${this.baseUrl}/${postId}`, post);
   }
 
-  deletePost(postId: string): Observable<any> {
+  deletePost(postId: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/${postId}`);
+  }
+
+  getUserPosts(userId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/user/${userId}`);
   }
 }

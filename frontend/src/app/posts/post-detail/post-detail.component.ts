@@ -84,12 +84,12 @@ export class PostDetailComponent implements OnInit {
   }
 
   deleteComment(commentId: number) {
-    const postId = this.route.snapshot.paramMap.get('id');
-    if (postId) {
-      this.commentService.deleteComment(commentId, +postId).subscribe(() => {
+    this.commentService.deleteComment(commentId).subscribe(() => {
+      const postId = this.route.snapshot.paramMap.get('id');
+      if (postId) {
         this.loadComments(postId);
-      });
-    }
+      }
+    });
   }
 
   isAuthor(comment: any): boolean {

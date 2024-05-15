@@ -12,7 +12,11 @@ export class CommentService {
         const post = await this.prismaService.post.findUnique({ where: { postId } });
         if (!post) throw new NotFoundException('Post not found');
         await this.prismaService.comment.create({
-            data: { content, userId, postId },
+            data: {
+                content,
+                userId,
+                postId
+            },
         });
         return { data: 'Comment created' };
     }
@@ -41,6 +45,15 @@ export class CommentService {
             where: { postId },
             include: {
                 user: true,
+            },
+        });
+    }
+
+    async getUserComments(userId: number) {
+        return this.prismaService.comment.findMany({
+            where: { userId },
+            include: {
+                post: true,
             },
         });
     }

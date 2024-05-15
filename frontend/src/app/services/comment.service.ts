@@ -14,15 +14,19 @@ export class CommentService {
     return this.http.get<any[]>(`${this.baseUrl}/post/${postId}`);
   }
 
-  createComment(postId: number, comment: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/create`, { ...comment, postId });
+  createComment(userId: number, comment: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}`, { ...comment, userId });
   }
 
   updateComment(commentId: number, comment: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/update/${commentId}`, comment);
+    return this.http.put(`${this.baseUrl}/${commentId}`, comment);
   }
 
-  deleteComment(commentId: number, postId: number): Observable<any> {
-    return this.http.request('delete', `${this.baseUrl}/delete/${commentId}`, { body: { postId } });
+  deleteComment(commentId: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${commentId}`);
+  }
+
+  getUserComments(userId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/user/${userId}`);
   }
 }
